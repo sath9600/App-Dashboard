@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Security Questions</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-question-circle"></i>
+                    <h1>Questioner</h1>
+                </div>
+                <nav class="nav">
+                    <a href="#" class="nav-link active" data-page="search">
+                        <i class="fas fa-search"></i> Search
+                    </a>
+                    <a href="#" class="nav-link" data-page="browse">
+                        <i class="fas fa-list"></i> Browse
+                    </a>
+                    <a href="#" class="nav-link" data-page="admin">
+                        <i class="fas fa-cog"></i> Admin
+                    </a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main">
+        <div class="container">
+            <!-- Search Page -->
+            <div id="search-page" class="page active">
+                <div class="hero">
+                    <h2>RFP Security Questions & Answers</h2>
+                    <p>Search through our comprehensive security questions and their answers</p>
+                </div>
+
+                <div class="search-section">
+                    <div class="search-box">
+                        <div class="search-input-wrapper">
+                            <i class="fas fa-search search-icon"></i>
+                            <input type="text" id="search-input" placeholder="Search for questions, keywords, or topics..." autocomplete="off">
+                            <button id="search-btn" class="search-btn">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                        <div class="search-filters">
+                            <select id="category-filter" class="filter-select">
+                                <option value="all">All Categories</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="search-results" class="results-section" style="display: none;">
+                    <div class="results-header">
+                        <h3 id="results-count">0 results found</h3>
+                    </div>
+                    <div id="results-container" class="results-container">
+                        <!-- Search results will be populated here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Browse Page -->
+            <div id="browse-page" class="page">
+                <div class="page-header">
+                    <h2>Browse All Questions</h2>
+                    <p>Explore questions by category</p>
+                </div>
+
+                <div class="browse-filters">
+                    <select id="browse-category-filter" class="filter-select">
+                        <option value="all">All Categories</option>
+                    </select>
+                    <div class="pagination-info">
+                        <span id="browse-info">Loading...</span>
+                    </div>
+                </div>
+
+                <div id="browse-results" class="results-container">
+                    <!-- Browse results will be populated here -->
+                </div>
+
+                <div id="browse-pagination" class="pagination">
+                    <!-- Pagination will be populated here -->
+                </div>
+            </div>
+
+            <!-- Admin Page -->
+            <div id="admin-page" class="page">
+                <div class="page-header">
+                    <h2>Admin Panel</h2>
+                    <p>Manage questions and categories</p>
+                </div>
+
+                <div class="admin-tabs">
+                    <button class="tab-btn active" data-tab="add-question">Add Question</button>
+                    <button class="tab-btn" data-tab="add-category">Add Category</button>
+                    <button class="tab-btn" data-tab="manage-questions">Manage Questions</button>
+                </div>
+
+                <!-- Add Question Tab -->
+                <div id="add-question-tab" class="tab-content active">
+                    <div class="form-card">
+                        <h3>Add New Question</h3>
+                        <form id="add-question-form">
+                            <div class="form-group">
+                                <label for="question-category">Category</label>
+                                <select id="question-category" name="category_id" required>
+                                    <option value="">Select a category</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="question-number">Question Number</label>
+                                <input type="text" id="question-number" name="question_number" placeholder="e.g., 1.0, 2.1">
+                            </div>
+                            <div class="form-group">
+                                <label for="question-text">Question</label>
+                                <textarea id="question-text" name="question_text" rows="3" required placeholder="Enter the question..."></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="answer-text">Answer</label>
+                                <textarea id="answer-text" name="answer_text" rows="4" required placeholder="Enter the answer..."></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="keywords">Keywords</label>
+                                <input type="text" id="keywords" name="keywords" placeholder="Enter keywords separated by spaces">
+                                <small>Keywords help improve search results</small>
+                            </div>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-plus"></i> Add Question
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Add Category Tab -->
+                <div id="add-category-tab" class="tab-content">
+                    <div class="form-card">
+                        <h3>Add New Category</h3>
+                        <form id="add-category-form">
+                            <div class="form-group">
+                                <label for="category-name">Category Name</label>
+                                <input type="text" id="category-name" name="name" required placeholder="Enter category name">
+                            </div>
+                            <div class="form-group">
+                                <label for="category-description">Description</label>
+                                <textarea id="category-description" name="description" rows="3" placeholder="Enter category description (optional)"></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-plus"></i> Add Category
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Manage Questions Tab -->
+                <div id="manage-questions-tab" class="tab-content">
+                    <div class="manage-section">
+                        <h3>Manage Questions</h3>
+                        <div class="manage-filters">
+                            <select id="manage-category-filter" class="filter-select">
+                                <option value="all">All Categories</option>
+                            </select>
+                            <input type="text" id="manage-search" placeholder="Search questions..." class="search-input">
+                        </div>
+                        <div id="manage-results" class="manage-results">
+                            <!-- Management results will be populated here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Questioner. Security Questions & Answers Database.</p>
+        </div>
+    </footer>
+
+    <!-- Loading Spinner -->
+    <div id="loading" class="loading" style="display: none;">
+        <div class="spinner"></div>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
