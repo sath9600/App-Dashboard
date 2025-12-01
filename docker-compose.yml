@@ -1,0 +1,51 @@
+version: '3.8'
+
+services:
+  questioner-app:
+    build: .
+    container_name: questioner-app
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+    volumes:
+      # Mount database directory for persistence
+      - ./database:/app/database
+      # Mount logs directory for persistence
+      - ./logs:/app/logs
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    networks:
+      - questioner-network
+
+  # Optional: Add a reverse proxy (nginx) for production
+  nginx:
+    image: nginx:alpine
+    container_name: questioner-nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./ssl:/etc/nginx/ssl:ro
+    depends_on:
+      - questioner-app
+    restart: unless-stopped
+    networks:
+      - questioner-network
+    profiles:
+      - production
+
+networks:
+  questioner-network:
+    driver: bridge
+
+volumes:
+  questioner-data:
+    driver: local

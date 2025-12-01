@@ -40,6 +40,22 @@ if %errorlevel% neq 0 (
 )
 
 echo.
+echo Rebuilding SQLite3 for Windows...
+npm rebuild sqlite3
+if %errorlevel% neq 0 (
+    echo WARNING: SQLite3 rebuild failed, trying alternative installation...
+    npm uninstall sqlite3
+    npm install sqlite3 --build-from-source
+    if %errorlevel% neq 0 (
+        echo ERROR: Failed to install SQLite3
+        echo Please ensure you have Visual Studio Build Tools installed
+        echo Download from: https://visualstudio.microsoft.com/visual-cpp-build-tools/
+        pause
+        exit /b 1
+    )
+)
+
+echo.
 echo Dependencies installed successfully!
 echo.
 
