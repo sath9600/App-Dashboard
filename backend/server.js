@@ -27,6 +27,16 @@ const db = new sqlite3.Database(dbPath, (err) => {
 
 // API Routes
 
+// Health check endpoint
+app.get('/health', (req, res) => {
+    res.json({ 
+        status: 'OK', 
+        timestamp: new Date().toISOString(),
+        environment: process.env.NODE_ENV || 'development',
+        port: PORT
+    });
+});
+
 // Get all categories
 app.get('/api/categories', (req, res) => {
     const sql = 'SELECT * FROM categories ORDER BY name';
